@@ -6,9 +6,9 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ScooterKonsortium {
     public class ScooterDbContext : DbContext {
-        public DbSet <Scooter>         scooters         { get; set; }
-        public DbSet <Company>         companies        { get; set; }
-        public DbSet <Chargingstation> chargingStations { get; set; }
+        public DbSet <Scooter>         Scooters         { get; set; }
+        public DbSet <Company>         Companies        { get; set; }
+        public DbSet <Chargingstation> ChargingStations { get; set; }
 
         // Configuration der Datenbankverbindung
         protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder) {
