@@ -33,13 +33,13 @@
                        FontSize           ="18" 
                        FontWeight         ="Bold"
                        Grid.ColumnSpan    ="3"
-                       Margin="25,0,30,22"/>
+                       Margin="25,0,27,22"/>
             
             <Button Grid.Column="1"
                     Height="40"
                     Width="100"
                     Command="{Binding ShowMainMenuCommand}" 
-                    Margin="20">
+                    Margin="0,20,0,20">
                 <TextBlock Text="Main Menu"
                            FontWeight="Bold"/>
             </Button>
@@ -47,7 +47,7 @@
                     Height="40"
                     Width="100"
                     Command="{Binding ShowSetupCommand}"
-                    Margin="20">
+                    Margin="0,20,0,20">
                     
                 <TextBlock Text="SetUp"
                            FontWeight="Bold"/>
@@ -56,7 +56,7 @@
             <Button Height="40"
                     Width="100"
                     Command="{Binding ShowOperativeCommand}"
-                    Margin="20">
+                    Margin="0,20,0,20">
                     
                 <TextBlock Text="Operative"
                            FontWeight="Bold"/>
@@ -70,6 +70,8 @@
                            FontWeight="Bold"/>
             </Button>
         </StackPanel>
-        <ContentControl Content="{Binding CurrentView}"/>
+        <ContentControl Grid.Column="1"
+                        Grid.ColumnSpan="4"
+                        Content="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>
