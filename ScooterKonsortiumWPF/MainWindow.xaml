@@ -3,10 +3,73 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ScooterKonsortium"
+        xmlns:local="clr-namespace:ScooterKonsortium" 
+        xmlns:viewmodel="clr-namespace:ScooterKonsortiumWPF.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         mc:Ignorable="d"
         Title="Scootsortium" Height="450" Width="800">
-    <Grid>
+    <Grid RowDefinitions="Auto,*">
+        <Grid.Background>
+            <!-- Image resource was causing XAML parse errors when the file was missing.
+                 Use a solid background color until the image is added to the project
+                 as a Resource with the correct path and build action. -->
+            <SolidColorBrush Color="LightGray"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" 
+                    Grid.Column="0"  
+                    HorizontalAlignment="Center" 
+                    Background="Gray">
+            <TextBlock Text               ="Scootorsium" 
+                       Grid.Column        ="0" 
+                       VerticalAlignment  ="Center" 
+                       HorizontalAlignment="Left" 
+                       FontSize           ="18" 
+                       FontWeight         ="Bold"
+                       Grid.ColumnSpan    ="3"
+                       Margin="25,0,30,22"/>
+            
+            <Button Grid.Column="1"
+                    Height="40"
+                    Width="100"
+                    Command="{Binding ShowMainMenuCommand}" 
+                    Margin="20">
+                <TextBlock Text="Main Menu"
+                           FontWeight="Bold"/>
+            </Button>
+            <Button Grid.Column="1"
+                    Height="40"
+                    Width="100"
+                    Command="{Binding ShowSetupCommand}"
+                    Margin="20">
+                    
+                <TextBlock Text="SetUp"
+                           FontWeight="Bold"/>
+            </Button>
+
+            <Button Height="40"
+                    Width="100"
+                    Command="{Binding ShowOperativeCommand}"
+                    Margin="20">
+                    
+                <TextBlock Text="Operative"
+                           FontWeight="Bold"/>
+            </Button>
+            <Button Height="35"
+                    Width="45"
+                    Command="{Binding ExitCommand}"
+                    Margin="0,68,0,45">
         
+                <TextBlock Text="Exit"
+                           FontWeight="Bold"/>
+            </Button>
+        </StackPanel>
+        <ContentControl Content="{Binding CurrentView}"/>
     </Grid>
 </Window>

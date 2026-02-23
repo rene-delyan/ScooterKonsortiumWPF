@@ -19,6 +19,8 @@ namespace ScooterKonsortium
         public MainWindow ()
         {
             InitializeComponent ();
+            // Set the runtime DataContext so command bindings in XAML resolve to the MainViewModel
+            this.DataContext = new ScooterKonsortiumWPF.ViewModel.MainViewModel();
         }
     }
 }
