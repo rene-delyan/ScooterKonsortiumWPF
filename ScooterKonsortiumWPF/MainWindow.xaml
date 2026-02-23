@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:ScooterKonsortiumWPF.ViewModel" 
         d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         mc:Ignorable="d"
-        Title="Scootsortium" Height="450" Width="800">
+        Title="Scootsortium" Height="515" Width="800">
     <Grid RowDefinitions="Auto,*">
         <Grid.Background>
             <!-- Image resource was causing XAML parse errors when the file was missing.
@@ -39,7 +39,7 @@
                     Height="40"
                     Width="100"
                     Command="{Binding ShowMainMenuCommand}" 
-                    Margin="0,20,0,20">
+                    Margin="0,20,0,25">
                 <TextBlock Text="Main Menu"
                            FontWeight="Bold"/>
             </Button>
@@ -47,7 +47,7 @@
                     Height="40"
                     Width="100"
                     Command="{Binding ShowSetupCommand}"
-                    Margin="0,20,0,20">
+                    Margin="0,25,0,25">
                     
                 <TextBlock Text="SetUp"
                            FontWeight="Bold"/>
@@ -56,7 +56,7 @@
             <Button Height="40"
                     Width="100"
                     Command="{Binding ShowOperativeCommand}"
-                    Margin="0,20,0,20">
+                    Margin="0,25,0,25">
                     
                 <TextBlock Text="Operative"
                            FontWeight="Bold"/>
@@ -64,7 +64,7 @@
             <Button Height="35"
                     Width="45"
                     Command="{Binding ExitCommand}"
-                    Margin="0,68,0,45">
+                    Margin="0,85,0,45">
         
                 <TextBlock Text="Exit"
                            FontWeight="Bold"/>

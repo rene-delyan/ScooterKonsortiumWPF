@@ -6,7 +6,173 @@
              xmlns:local="clr-namespace:ScooterKonsortiumWPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+<Grid Margin="20">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="20"/>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="20"/>
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <!-- ========================= -->
+    <!-- Ladepunkte -->
+    <!-- ========================= -->
+    <Border Grid.Column="0"
+            Padding="15"
+            Background="#F4F4F4"
+            CornerRadius="8"
+            BorderBrush="#CCCCCC"
+            BorderThickness="1">
+
+        <StackPanel>
+
+            <TextBlock Text="Ladepunkte"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="0 0 0 3"/>
+
+            <TextBlock Text="Name"/>
+            <TextBox Text="{Binding NewStationName}"
+                     Margin="0 3 0 8"
+                     Height="20"/>
+
+            <TextBlock Text="Position X"/>
+            <TextBox Text="{Binding NewStationX}"
+                     Margin="0 3 0 8"
+                     Height="20"/>
+
+            <TextBlock Text="Position Y"/>
+            <TextBox Text="{Binding NewStationY}"
+                     Margin="0 3 0 8"
+                     Height="20"/>
+
+            <TextBlock Text="Kapazität"/>
+            <TextBox Text="{Binding NewStationCapacity}"
+                     Margin="0 3 0 8"
+                     Height="20"/>
+
+                <Button Content="Ladepunkt hinzufügen"
+                    Command="{Binding AddStationCommand}"
+                    Height="20"
+                    Margin="0 25 0 15"/>
+
+            <TextBlock Text="Erfasste Ladepunkte:"
+                       FontWeight="SemiBold"
+                       Margin="0 10 0 5"/>
+
+            <ListBox ItemsSource="{Binding ChargingStations}"
+                     Height="70"/>
+
+        </StackPanel>
+    </Border>
+
+
+    <!-- ========================= -->
+    <!-- Firmen -->
+    <!-- ========================= -->
+    <Border Grid.Column="2"
+            Padding="15"
+            Background="#F4F4F4"
+            CornerRadius="8"
+            BorderBrush="#CCCCCC"
+            BorderThickness="1">
+
+        <StackPanel>
+
+            <TextBlock Text="Firmen"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="0 0 0 5"/>
+
+            <TextBlock Text="Firmenname"/>
+            <TextBox Text="{Binding NewCompanyName}"
+                     Margin="0 3 0 8"
+                     Height="20"/>
+
+            <TextBlock Text="Ladepunkt auswählen"/>
+            <ComboBox ItemsSource="{Binding ChargingStations}"
+                      SelectedItem="{Binding SelectedStation}"
+                      DisplayMemberPath="Name"
+                      Margin="0 3 0 8"
+                      Height="20"/>
+
+            <TextBlock Text="Kosten pro Km (in €)"/>
+            <TextBox Text="{Binding NewCompanyCostPerKm}"
+                     Margin="0 3 0 8"
+                     Height="20"/>
+            <TextBlock Text="Email und Telefon"/>
+            <TextBox Text="{Binding NewCompanyMailAdress}"
+                     Margin="0 3 0 0"
+                     Height="20"/>
+
+            <TextBox Text="{Binding NewCompanyPhoneNumber}"
+                     Margin="0 3 0 8"
+                     Height="20"/>
+                <Button Content="Firma hinzufügen"
+                    Command="{Binding AddCompanyCommand}"
+                    Height="20"
+                    Margin="0 0 0 25"/>
             
-    </Grid>
+            <TextBlock Text="Erfasste Firmen:"
+                       FontWeight="SemiBold"
+                       Margin="0 0 0 5"/>
+
+            <ListBox ItemsSource="{Binding Companies}"
+                     Height="70"/>
+
+        </StackPanel>
+    </Border>
+
+
+    <!-- ========================= -->
+    <!-- Scooter -->
+    <!-- ========================= -->
+    <Border Grid.Column="4"
+            Padding="15"
+            Background="#F4F4F4"
+            CornerRadius="8"
+            BorderBrush="#CCCCCC"
+            BorderThickness="1">
+
+        <StackPanel>
+
+            <TextBlock Text="Scooter"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="0 0 0 5"/>
+
+            <TextBlock Text="Position X"/>
+            <TextBox Text="{Binding NewScooterX}"
+                     Margin="0 3 0 8"
+                     Height="20"/>
+
+            <TextBlock Text="Position Y"/>
+            <TextBox Text="{Binding NewScooterY}"
+                     Margin="0 3 0 8"
+                     Height="20"/>
+
+            <TextBlock Text="Firma auswählen"/>
+            <ComboBox ItemsSource="{Binding Companies}"
+                      SelectedItem="{Binding SelectedCompany}"
+                      DisplayMemberPath="Name"
+                      Margin="0 3 0 8"
+                      Height="20"/>
+
+            <Button Content="Scooter hinzufügen"
+                    Command="{Binding AddScooterCommand}"
+                    Height="20"
+                    Margin="0 70 0 15"/>
+
+            <TextBlock Text="Erfasste Scooter:"
+                       FontWeight="SemiBold"
+                       Margin="0 10 0 5"/>
+
+            <ListBox ItemsSource="{Binding Scooters}"
+                     Height="70"/>
+
+        </StackPanel>
+    </Border>
+
+</Grid>
 </UserControl>
