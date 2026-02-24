@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using ScooterKonsortium;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -52,6 +54,9 @@ namespace ScooterKonsortiumWPF.ViewModel
             ExitCommand = new RelayCommand (() => Application.Current.Shutdown ());
 
             CurrentViewModel = MainMenuVM;
+
+            using var context = new ScooterDbContext ();
+            context.Database.EnsureCreated (); //Stellt sicher, dass die Datenbank und Tabellen existieren
         }
 
         public void ShowMainMenu ()

@@ -53,7 +53,7 @@
                      Height="20"/>
 
                 <Button Content="Ladepunkt hinzufügen"
-                    Command="{Binding AddStationCommand}"
+                    Command="{Binding AddLoadingStationCommand}"
                     Height="20"
                     Margin="0 25 0 15"/>
 
@@ -61,7 +61,7 @@
                        FontWeight="SemiBold"
                        Margin="0 10 0 5"/>
 
-            <ListBox ItemsSource="{Binding ChargingStations}"
+            <ListBox ItemsSource="{Binding hargingStations}"
                      Height="70"/>
 
         </StackPanel>
@@ -95,7 +95,8 @@
                       SelectedItem="{Binding SelectedStation}"
                       DisplayMemberPath="Name"
                       Margin="0 3 0 8"
-                      Height="20"/>
+                      Height="20"
+                      IsEnabled="{Binding DoesALoadingStationExist}"/>
 
             <TextBlock Text="Kosten pro Km (in €)"/>
             <TextBox Text="{Binding NewCompanyCostPerKm}"
@@ -118,7 +119,7 @@
                        FontWeight="SemiBold"
                        Margin="0 0 0 5"/>
 
-            <ListBox ItemsSource="{Binding Companies}"
+            <ListBox ItemsSource="{Binding companies}"
                      Height="70"/>
 
         </StackPanel>
@@ -157,7 +158,8 @@
                       SelectedItem="{Binding SelectedCompany}"
                       DisplayMemberPath="Name"
                       Margin="0 3 0 8"
-                      Height="20"/>
+                      Height="20"
+                      IsEnabled="{Binding DoesACompanyExist}"/>
 
             <Button Content="Scooter hinzufügen"
                     Command="{Binding AddScooterCommand}"
@@ -168,7 +170,7 @@
                        FontWeight="SemiBold"
                        Margin="0 10 0 5"/>
 
-            <ListBox ItemsSource="{Binding Scooters}"
+            <ListBox ItemsSource="{Binding scooters}"
                      Height="70"/>
 
         </StackPanel>

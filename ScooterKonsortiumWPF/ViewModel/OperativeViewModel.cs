@@ -37,8 +37,7 @@ namespace ScooterKonsortiumWPF.ViewModel {
             this.mMainViewModel = main;
 
             using var context = new ScooterDbContext ();
-
-            var scootersFromDb = context.Scooters.ToList ();
+            var scootersFromDb = context.scooters.ToList ();
 
             Scooters = new ObservableCollection<ScooterViewModel> (
                 scootersFromDb.Select (s => new ScooterViewModel (s))

@@ -2,17 +2,34 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ScooterKonsortium {
     public class ScooterDbContext : DbContext {
-        public DbSet <Scooter>         Scooters         { get; set; }
-        public DbSet <Company>         Companies        { get; set; }
-        public DbSet <Chargingstation> ChargingStations { get; set; }
+        public DbSet <Scooter>         scooters         { get; set; }
+        public DbSet <Company>         companies        { get; set; }
+        public DbSet <Chargingstation> chargingStations { get; set; }
 
         // Configuration der Datenbankverbindung
         protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder) {
-            optionsBuilder.UseSqlite ("Data Source=scooterKonsortium.db");
+            // DB-Dateiname (erwarte, dass die .db in Output-Ordner liegt)
+            var dbFileName = "scooterKonsortium.db";
+
+            // Absoluter Pfad im Ausgabeverzeichnis der Anwendung
+            var exeDir = AppContext.BaseDirectory ?? Environment.CurrentDirectory;
+            var dbPath = Path.Combine(exeDir, dbFileName);
+
+            // Optional: Fallback in LocalApplicationData, falls Datei nicht im Output liegt
+            if (!File.Exists(dbPath)) {
+                var altFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "ScooterKonsortiumWPF");
+                Directory.CreateDirectory(altFolder);
+                dbPath = Path.Combine(altFolder, dbFileName);
+            }
+
+            optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
 
         //Setzt die Primärschlüssel und Defaultwerte für die Entitäten

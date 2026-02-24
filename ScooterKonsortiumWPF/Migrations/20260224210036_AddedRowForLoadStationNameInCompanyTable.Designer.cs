@@ -10,8 +10,8 @@ using ScooterKonsortium;
 namespace ScooterKonsortium.Migrations
 {
     [DbContext(typeof(ScooterDbContext))]
-    [Migration("20251226222929_EditTableNamesToBeUpperCase")]
-    partial class EditTableNamesToBeUpperCase
+    [Migration("20260224210036_AddedRowForLoadStationNameInCompanyTable")]
+    partial class AddedRowForLoadStationNameInCompanyTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace ScooterKonsortium.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChargingStations");
+                    b.ToTable("chargingStations");
                 });
 
             modelBuilder.Entity("ScooterKonsortium.Company", b =>
@@ -71,6 +71,10 @@ namespace ScooterKonsortium.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("LoadStationName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -80,7 +84,7 @@ namespace ScooterKonsortium.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Companies");
+                    b.ToTable("companies");
                 });
 
             modelBuilder.Entity("ScooterKonsortium.Scooter", b =>
@@ -131,7 +135,7 @@ namespace ScooterKonsortium.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Scooters");
+                    b.ToTable("scooters");
                 });
 
             modelBuilder.Entity("ScooterKonsortium.Scooter", b =>
