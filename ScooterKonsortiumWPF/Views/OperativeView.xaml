@@ -7,6 +7,73 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
-    </Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+        <ComboBox ItemsSource="{Binding Scooters}"
+                  SelectedItem="{Binding SelectedScooter}"
+                  Grid.Row="0"
+                  Height="20"
+                  Width="120"
+                  Margin="10"/> 
+        <Canvas Background="Green"
+            Width="650"
+            Height="400"
+            Grid.Row="1">
+
+        <!-- Ladepunkte -->
+        <ItemsControl ItemsSource="{Binding ChargingStations}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Left"
+                            Value="{Binding PosX}" />
+                    <Setter Property="Canvas.Top"
+                            Value="{Binding PosY}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Width="15"
+                               Height="15"
+                               Fill="Red"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Scooter -->
+        <ItemsControl ItemsSource="{Binding Scooters}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Left"
+                            Value="{Binding DrawX}" />
+                    <Setter Property="Canvas.Top"
+                            Value="{Binding DrawY}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Ellipse Width="12"
+                             Height="12"
+                             Fill="Blue"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </Canvas>
+</Grid>
 </UserControl>

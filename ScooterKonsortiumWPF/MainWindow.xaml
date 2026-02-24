@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:ScooterKonsortiumWPF.ViewModel" 
         d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         mc:Ignorable="d"
-        Title="Scootsortium" Height="515" Width="800">
+        Title="Scootsortium" Height="515" Width="850">
     <Grid RowDefinitions="Auto,*">
         <Grid.Background>
             <!-- Image resource was causing XAML parse errors when the file was missing.
@@ -64,7 +64,7 @@
             <Button Height="35"
                     Width="45"
                     Command="{Binding ExitCommand}"
-                    Margin="0,85,0,45">
+                    Margin="62,85,62,45">
         
                 <TextBlock Text="Exit"
                            FontWeight="Bold"/>
