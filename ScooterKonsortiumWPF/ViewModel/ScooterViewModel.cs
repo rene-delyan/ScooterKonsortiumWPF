@@ -7,10 +7,12 @@ namespace ScooterKonsortiumWPF.ViewModel
 {
     public class ScooterViewModel : ViewModelBase {
         private readonly Scooter _model;
+        private readonly ScooterDbContext _context;
 
         public ScooterViewModel (Scooter model)
         {
             _model = model;
+            _context = new ScooterDbContext ();
         }
 
         public int Id => _model.Id;
@@ -22,6 +24,7 @@ namespace ScooterKonsortiumWPF.ViewModel
                     _model.PosX = value;
                     OnPropertyChanged ();
                     OnPropertyChanged (nameof (DrawX));
+                    _context.SaveChanges (); //Änderung in der DB speichern
                 }
             }
         }
@@ -33,6 +36,7 @@ namespace ScooterKonsortiumWPF.ViewModel
                     _model.PosY = value;
                     OnPropertyChanged ();
                     OnPropertyChanged (nameof (DrawY));
+                    _context.SaveChanges (); //Änderung in der DB speichern
                 }
             }
         }
