@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Text;
 using System.Windows.Input;
 
@@ -16,8 +17,6 @@ namespace ScooterKonsortiumWPF.ViewModel {
         public ICommand BringScooterToStationCommand { get; }
 
         //Public properties
-        public double mScale => 20;
-
         public int ChangePosX { 
             get; set; 
         }
@@ -34,6 +33,26 @@ namespace ScooterKonsortiumWPF.ViewModel {
             set {
                 mSelectedScooter = value;
                 OnPropertyChanged ();
+                OnPropertyChanged (nameof (GetCorrectColor));
+            }
+        }
+
+        public ObservableCollection<ChargingStationViewModel> ChargingStations {
+            get;
+        }
+
+        public System.Windows.Media.Brush GetCorrectColor {
+            get {
+                if (SelectedScooter == null)
+                    return System.Windows.Media.Brushes.Black;
+                if (SelectedScooter.CurrentBattery > 60)
+                    return System.Windows.Media.Brushes.Green;
+                else if (SelectedScooter.CurrentBattery <= 60 && SelectedScooter.CurrentBattery > 35)
+                    return System.Windows.Media.Brushes.Yellow;
+                else if (SelectedScooter.CurrentBattery <= 35)
+                    return System.Windows.Media.Brushes.Red;
+                else
+                    return System.Windows.Media.Brushes.Black;
             }
         }
 
@@ -48,6 +67,12 @@ namespace ScooterKonsortiumWPF.ViewModel {
             Scooters = new ObservableCollection<ScooterViewModel> (
                 scootersFromDb.Select (s => new ScooterViewModel (s, mDbContext))
             );
+
+            var chargingStationsFromDb = mDbContext.chargingStations.ToList ();
+            ChargingStations = new ObservableCollection<ChargingStationViewModel> (
+                chargingStationsFromDb.Select (cs => new ChargingStationViewModel (cs, mDbContext))
+            );
+
             ChangePositionCommand        = new RelayCommand (MoveScooter);
             BringScooterToStationCommand = new RelayCommand (BringScooterToStation);
         }

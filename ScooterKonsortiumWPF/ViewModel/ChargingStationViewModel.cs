@@ -1,32 +1,22 @@
-﻿using ScooterKonsortium;
+﻿using Microsoft.EntityFrameworkCore;
+using ScooterKonsortium;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ScooterKonsortiumWPF.ViewModel
-{
-    public class ScooterViewModel : ViewModelBase {
-        private readonly Scooter mModel;
+namespace ScooterKonsortiumWPF.ViewModel {
+    public class ChargingStationViewModel : ViewModelBase {
+        private readonly Chargingstation  mModel;
         private readonly ScooterDbContext mContext;
-
-        public ScooterViewModel (Scooter model, ScooterDbContext dbContext)
+        public ChargingStationViewModel (Chargingstation model, ScooterDbContext dbContext)
         {
-            mModel   = model;
+            mModel = model;
             mContext = dbContext;
         }
 
-        public int Id => mModel.Id;
-
-        public int CurrentBattery { 
-            get => mModel.Battery;
-            set {
-                if (mModel.Battery != value) {
-                    mModel.Battery = value;
-                    OnPropertyChanged    ();
-                    mContext.SaveChanges (); //Änderung in der DB speichern
-                }
-            }
-        }
+        public long   Id   => mModel.Id;
+        public string Name => mModel.Name;
 
         public int PosX {
             get => mModel.PosX;

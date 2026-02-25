@@ -55,6 +55,26 @@
                  Height="20"
                  Width="45"
                  Grid.Column="1"/>
+        <Label   Content="Akku: "
+                 FontFamily="Arial Black"
+                 FontSize="25"
+                 Grid.Column="3"
+                 Grid.Row="0"
+                 Grid.RowSpan="2"
+                 HorizontalContentAlignment="Left"
+                 VerticalContentAlignment  ="Center"
+                 Margin="0,5,0,0"/>
+        <Label   Content="{Binding SelectedScooter.CurrentBattery}"
+                 FontFamily="Arial Black"
+                 FontSize="25"
+                 Grid.Column="3"
+                 Grid.Row="0"
+                 Grid.RowSpan="2"
+                 HorizontalContentAlignment="Center"
+                 VerticalContentAlignment  ="Center"
+                 Margin="80,5,0,0"
+                 Foreground="{Binding GetCorrectColor}"/>
+
         <Button  Content="Position ändern"
                  Command="{Binding ChangePositionCommand}"
                  Height="20"
@@ -69,15 +89,8 @@
                  Margin="0,5,0,0"
                  Grid.Column="4"
                  Grid.Row="1"/>
-        <Label   Content="{Binding SelectedScooter.CurrentBattery}"
-                 FontFamily="Arial Black"
-                 FontSize="25"
-                 Grid.Column="3"
-                 Grid.Row="0"
-                 Grid.RowSpan="2"
-                 HorizontalContentAlignment="Center"
-                 VerticalContentAlignment  ="Center"
-                 Margin="0,10,0,0"/>
+
+        <!-- Canvas -->
         <Canvas  Background="Green"
                  Width="660"
                  Height="400"
@@ -97,9 +110,9 @@
             <ItemsControl.ItemContainerStyle>
                 <Style>
                     <Setter Property="Canvas.Left"
-                            Value="{Binding PosX}" />
+                            Value="{Binding DrawX}" />
                     <Setter Property="Canvas.Top"
-                            Value="{Binding PosY}" />
+                            Value="{Binding DrawY}" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
 
