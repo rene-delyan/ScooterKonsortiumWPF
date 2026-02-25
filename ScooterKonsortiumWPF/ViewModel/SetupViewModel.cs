@@ -53,41 +53,41 @@ namespace ScooterKonsortiumWPF.ViewModel {
         #endregion
 
         #region Input properties for new company
-        private string mNewCompanyName;
-        private string mNewCompanyLoadStationName;
-        private double mNewCompanyCostPerKm;
-        private string mNewCompanyMailAddress;
-        private string mNewCompanyPhoneNumber;
+        private string  mNewCompanyName;
+        private string  mNewCompanyLoadStationName;
+        private double? mNewCompanyCostPerKm;
+        private string  mNewCompanyMailAddress;
+        private string  mNewCompanyPhoneNumber;
         
-        public string NewCompanyName {
+        public string  NewCompanyName {
             get => mNewCompanyName;
             set {
                 mNewCompanyName = value;
                 OnPropertyChanged ();
             }
         }
-        public string NewCompanyLoadStationName {
+        public string  NewCompanyLoadStationName {
             get => mNewCompanyLoadStationName;
             set {
                 mNewCompanyLoadStationName = value;
                 OnPropertyChanged ();
             }
         }
-        public double NewCompanyCostPerKm {
+        public double? NewCompanyCostPerKm {
             get => mNewCompanyCostPerKm;
             set {
                 mNewCompanyCostPerKm = value;
                 OnPropertyChanged ();
             }
         }
-        public string NewCompanyMailAddress {
+        public string  NewCompanyMailAddress {
             get => mNewCompanyMailAddress;
             set {
                 mNewCompanyMailAddress = value;
                 OnPropertyChanged ();
             }
         }
-        public string NewCompanyPhoneNumber {
+        public string  NewCompanyPhoneNumber {
             get => mNewCompanyPhoneNumber;
             set {
                 mNewCompanyPhoneNumber = value;
@@ -227,7 +227,7 @@ namespace ScooterKonsortiumWPF.ViewModel {
             }
             var company = new Company { Name            = NewCompanyName, 
                                         LoadStationName = SelectedStation.Name, 
-                                        CostPerKm       = NewCompanyCostPerKm, 
+                                        CostPerKm       = NewCompanyCostPerKm ?? 0.59, 
                                         Email           = NewCompanyMailAddress, 
                                         Hotline         = NewCompanyPhoneNumber };
             mSetupContext.companies.Add (company);
