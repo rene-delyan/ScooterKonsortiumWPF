@@ -61,7 +61,8 @@
                        FontWeight="SemiBold"
                        Margin="0 10 0 5"/>
 
-            <ListBox ItemsSource="{Binding hargingStations}"
+            <ListBox ItemsSource="{Binding ChargingStations}"
+                     DisplayMemberPath="Name"
                      Height="70"/>
 
         </StackPanel>
@@ -103,7 +104,7 @@
                      Margin="0 3 0 8"
                      Height="20"/>
             <TextBlock Text="Email und Telefon"/>
-            <TextBox Text="{Binding NewCompanyMailAdress}"
+            <TextBox Text="{Binding NewCompanyMailAddress}"
                      Margin="0 3 0 0"
                      Height="20"/>
 
@@ -119,7 +120,8 @@
                        FontWeight="SemiBold"
                        Margin="0 0 0 5"/>
 
-            <ListBox ItemsSource="{Binding companies}"
+            <ListBox ItemsSource="{Binding Companies}"
+                     DisplayMemberPath="Name"
                      Height="70"/>
 
         </StackPanel>
@@ -170,11 +172,24 @@
                        FontWeight="SemiBold"
                        Margin="0 10 0 5"/>
 
-            <ListBox ItemsSource="{Binding scooters}"
-                     Height="70"/>
-
+            <ListBox ItemsSource="{Binding Scooters}"
+                     Height="70">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="ID:" />
+                            <TextBlock Text="{Binding Id}" />
+                            <TextBlock Text=" | Firma: " />
+                            <TextBlock Text="{Binding Company.Name}"/>
+                            <TextBlock Text=" | " />
+                            <TextBlock Text="{Binding PosX}" />
+                            <TextBlock Text="," />
+                            <TextBlock Text="{Binding PosY}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
     </Border>
-
 </Grid>
 </UserControl>

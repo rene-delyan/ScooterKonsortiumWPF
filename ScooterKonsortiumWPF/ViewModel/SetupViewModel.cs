@@ -1,24 +1,26 @@
 ﻿using ScooterKonsortium;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ScooterKonsortiumWPF.ViewModel {
     public class SetupViewModel : ViewModelBase {
         private readonly MainViewModel mainViewModel;
+        private readonly ScooterDbContext mSetupContext;
         //Command properties
         public ICommand AddLoadingStationCommand { get; }
         public ICommand AddScooterCommand        { get; }
         public ICommand AddCompanyCommand        { get; }
 
-        //Input properties for new station
+        #region Input properties for new station
         private string mNewStationName;
-        private int    mNewStationPosX;
-        private int    mNewStationPosY;
+        private int?   mNewStationPosX;
+        private int?   mNewStationPosY;
         private int    mNewStationCapacity;
 
-        //Public properties for new station input
         public string NewStationName {
             get => mNewStationName;
             set {
@@ -26,14 +28,14 @@ namespace ScooterKonsortiumWPF.ViewModel {
                 OnPropertyChanged ();
             }
         }
-        public int    NewStationX {
+        public int?   NewStationX {
             get => mNewStationPosX;
             set {
                 mNewStationPosX = value;
                 OnPropertyChanged ();
             }
         }
-        public int    NewStationY {
+        public int?   NewStationY {
             get => mNewStationPosY;
             set {
                 mNewStationPosY = value;
@@ -48,14 +50,15 @@ namespace ScooterKonsortiumWPF.ViewModel {
             }
         }
 
-        //Input properties for new company
+        #endregion
+
+        #region Input properties for new company
         private string mNewCompanyName;
         private string mNewCompanyLoadStationName;
         private double mNewCompanyCostPerKm;
         private string mNewCompanyMailAddress;
         private string mNewCompanyPhoneNumber;
-
-        //Public properties for new company input
+        
         public string NewCompanyName {
             get => mNewCompanyName;
             set {
@@ -92,20 +95,23 @@ namespace ScooterKonsortiumWPF.ViewModel {
             }
         }
 
-        //Input properties for new scooter
-        private int    mNewScooterPosX;
-        private int    mNewScooterPosY;
+#endregion
+
+        #region Input properties for new scooter
+
+        private int?   mNewScooterPosX;
+        private int?   mNewScooterPosY;
         private string mNewScooterCompanyName;
 
         //Public properties for new scooter input
-        public int    NewScooterPosX {
+        public int? NewScooterPosX {
             get => mNewScooterPosX;
             set {
                 mNewScooterPosX = value;
                 OnPropertyChanged ();
             }
         }
-        public int    NewScooterPosY {
+        public int? NewScooterPosY {
             get => mNewScooterPosY;
             set {
                 mNewScooterPosY = value;
@@ -120,64 +126,134 @@ namespace ScooterKonsortiumWPF.ViewModel {
             }
         }
 
-        //Public properties to enable/disable certain input fields
-        public static bool DoesACompanyExist {
+        #endregion
+
+        #region Public properties to enable/disable certain input fields
+        public bool DoesACompanyExist {
             get {
-                using var context = new ScooterDbContext ();
-                return context.companies.Any ();
+                return mSetupContext.companies.Any ();
             }
         }
 
-        public static bool DoesALoadingStationExist {
+        public bool DoesALoadingStationExist {
             get {
-                using var context = new ScooterDbContext ();
-                return context.chargingStations.Any ();
+                return mSetupContext.chargingStations.Any ();
             }
         }
 
+        #endregion
+
+        #region OCs to fill UI
         //Public properties to fill ListBoxes and ComboBoxes
-        public List<string> ChargingStations {
-            get {
-                using var context = new ScooterDbContext ();
-                return context.chargingStations.Select (s => s.Name).ToList ();
-            }
+        public ObservableCollection<Chargingstation> ChargingStations {
+            get;
+            set;
         }
 
-        //Constructor
+        public ObservableCollection<Company> Companies {
+            get;
+            set;
+        }
+
+        public ObservableCollection<Scooter> Scooters {
+            get;
+            set;
+        }
+        #endregion
+
+        #region Properties for selected ComboBox Entry
+        //Public properties for selected ComboBox Entry
+        public Chargingstation SelectedStation {
+            get;
+            set;
+        }
+
+        public Company SelectedCompany {
+            get;
+            set;
+        }
+        #endregion
+
+        #region Constructor and Functions
         public SetupViewModel (MainViewModel main)
         {
             if (main == null)
                 throw new ArgumentNullException (nameof (main));
             this.mainViewModel = main;
+            mSetupContext = new ScooterDbContext ();
 
             AddLoadingStationCommand = new RelayCommand (AddLoadingStationExecute);
             AddCompanyCommand        = new RelayCommand (AddCompanyExecute);
             AddScooterCommand        = new RelayCommand (AddScooterExecute);
+
+            mSetupContext.Database.EnsureCreated (); //Stellt sicher, dass die Datenbank und Tabellen existieren
+
+            ChargingStations = new ObservableCollection<Chargingstation> (
+                mSetupContext.chargingStations
+                       .ToList ()
+            );
+
+            Companies = new ObservableCollection<Company> (
+                mSetupContext.companies
+                       .ToList ()
+            );
+
+            Scooters = new ObservableCollection<Scooter> (
+                mSetupContext.scooters
+                       .ToList ()
+            );
         }
 
         private void AddLoadingStationExecute ()
         {
-            using var context = new ScooterDbContext ();
-            var station = new Chargingstation { Name = NewStationName, PosX = NewStationX, PosY = NewStationY, Capacity = NewStationCapacity };
-            context.chargingStations.Add (station);
-            context.SaveChanges ();
+            var station = new Chargingstation { Name     = NewStationName, 
+                                                PosX     = NewStationX ?? -1, 
+                                                PosY     = NewStationY ?? -1, 
+                                                Capacity = NewStationCapacity };
+            mSetupContext.chargingStations.Add (station);
+            mSetupContext.SaveChanges ();
+            
+            ChargingStations.Add (station); //Aktualisiert die ObservableCollection, damit die neue Ladestation sofort in der UI erscheint
         }
 
         private void AddCompanyExecute ()
         {
-            using var context = new ScooterDbContext ();
-            var company = new Company { Name = NewCompanyName, LoadStationName = NewCompanyLoadStationName, CostPerKm = NewCompanyCostPerKm, Email = NewCompanyMailAddress, Hotline = NewCompanyPhoneNumber };
-            context.companies.Add (company);
-            context.SaveChanges ();
+            if (SelectedStation == null) {
+                MessageBox.Show ("Bitte wählen Sie zuerst eine Ladestation aus, bevor Sie eine Firma hinzufügen.", 
+                                 "Fehler", 
+                                 MessageBoxButton.OK, 
+                                 MessageBoxImage.Error);
+                return;
+            }
+            var company = new Company { Name            = NewCompanyName, 
+                                        LoadStationName = SelectedStation.Name, 
+                                        CostPerKm       = NewCompanyCostPerKm, 
+                                        Email           = NewCompanyMailAddress, 
+                                        Hotline         = NewCompanyPhoneNumber };
+            mSetupContext.companies.Add (company);
+            mSetupContext.SaveChanges ();
+
+            Companies.Add (company);
         }
 
         private void AddScooterExecute ()
         {
-            using var context = new ScooterDbContext ();
-            int companyId = context.companies.Where (c => c.Name == NewScooterCompanyName).Select (c => c.Id).FirstOrDefault (); 
-            var scooter = new Scooter { CompanyId = companyId, PosX = NewScooterPosX, PosY = NewScooterPosY};
-            context.scooters.Add (scooter);
-            context.SaveChanges ();
+            if (SelectedCompany == null) {
+                MessageBox.Show ("Bitte wählen Sie zuerst eine Firma aus, bevor Sie einen Scooter hinzufügen.", 
+                                 "Fehler", 
+                                 MessageBoxButton.OK, 
+                                 MessageBoxImage.Error);
+                return;
+            }
+            int companyId = mSetupContext.companies.Where (c => c.Name == SelectedCompany.Name).Select (c => c.Id).FirstOrDefault (); 
+            var scooter = new Scooter { CompanyId = companyId, 
+                                        PosX      = NewScooterPosX ?? -1, 
+                                        PosY      = NewScooterPosY ?? -1};
+            mSetupContext.scooters.Add (scooter);
+            mSetupContext.SaveChanges ();
+
+            Scooters.Add (scooter);
         }
+        #endregion
     }
 }
