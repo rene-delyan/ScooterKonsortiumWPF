@@ -11,8 +11,19 @@ namespace ScooterKonsortiumWPF.ViewModel {
         private readonly MainViewModel       mMainViewModel;
         private          ScooterViewModel    mSelectedScooter;
 
+        public ICommand ChangePositionCommand {
+            get;
+        }
+
         //Public properties
-        public double                       mScale => 20;
+        public double mScale => 20;
+
+        public int ChangePosX { 
+            get; set; 
+        }
+        public int ChangePosY {
+            get; set;
+        }
 
         //Memberfunctions
         public ObservableCollection<ScooterViewModel> Scooters {
@@ -26,11 +37,6 @@ namespace ScooterKonsortiumWPF.ViewModel {
             }
         }
 
-        //Commands
-        public ICommand MoveCommand {
-            get;
-        }
-
         //Constructor
         public OperativeViewModel (MainViewModel main)
         {
@@ -42,7 +48,7 @@ namespace ScooterKonsortiumWPF.ViewModel {
             Scooters = new ObservableCollection<ScooterViewModel> (
                 scootersFromDb.Select (s => new ScooterViewModel (s))
             );
-            MoveCommand = new RelayCommand (MoveScooter);
+            ChangePositionCommand = new RelayCommand (MoveScooter);
         }
 
         //Functions

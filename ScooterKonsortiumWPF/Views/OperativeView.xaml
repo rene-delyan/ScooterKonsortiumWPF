@@ -11,16 +11,36 @@
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <ComboBox ItemsSource="{Binding Scooters}"
                   SelectedItem="{Binding SelectedScooter}"
                   Grid.Row="0"
                   Height="20"
                   Width="120"
                   Margin="10"/> 
+        <TextBox Text="{Binding ChangePosX}"
+                 Height="20"
+                 Width="60"
+                 Grid.Column="1"/>
+        <TextBox Text="{Binding ChangePosY}"
+                 Height="20"
+                 Width="60"
+                 Grid.Column="2"/>
+        <Button Content="Position ändern"
+                Command="{Binding ChangePositionCommand}"
+                Height="20"
+                Width="120"
+                Grid.Column="3"/>
         <Canvas Background="Green"
             Width="650"
             Height="400"
-            Grid.Row="1">
+            Grid.Row="1"
+            Grid.ColumnSpan="4">
 
         <!-- Ladepunkte -->
         <ItemsControl ItemsSource="{Binding ChargingStations}">
