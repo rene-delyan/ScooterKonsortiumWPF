@@ -146,12 +146,12 @@
                        Margin="0 0 0 5"/>
 
             <TextBlock Text="Position X"/>
-            <TextBox Text="{Binding NewScooterX}"
+            <TextBox Text="{Binding NewScooterPosX}"
                      Margin="0 3 0 8"
                      Height="20"/>
 
             <TextBlock Text="Position Y"/>
-            <TextBox Text="{Binding NewScooterY}"
+            <TextBox Text="{Binding NewScooterPosY}"
                      Margin="0 3 0 8"
                      Height="20"/>
 
