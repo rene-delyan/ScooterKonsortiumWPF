@@ -22,7 +22,20 @@
                   Grid.Row="0"
                   Height="20"
                   Width="120"
-                  Margin="10"/> 
+                  Margin="10">
+        <ComboBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Scooter: "/>
+                    <TextBlock Text="{Binding Id}"/>
+                    <TextBlock Text=" | Pos: "/>
+                    <TextBlock Text="{Binding PosX}"/>
+                    <TextBlock Text=", "/>
+                    <TextBlock Text="{Binding PosY}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBox Text="{Binding ChangePosX}"
                  Height="20"
                  Width="60"

@@ -9,6 +9,7 @@ namespace ScooterKonsortiumWPF.ViewModel {
     public class OperativeViewModel : ViewModelBase {
         //Private properties
         private readonly MainViewModel       mMainViewModel;
+        private          ScooterDbContext    mDbContext;
         private          ScooterViewModel    mSelectedScooter;
 
         public ICommand ChangePositionCommand {
@@ -42,11 +43,11 @@ namespace ScooterKonsortiumWPF.ViewModel {
         {
             this.mMainViewModel = main;
 
-            using var context = new ScooterDbContext ();
-            var scootersFromDb = context.scooters.ToList ();
+            mDbContext = new ScooterDbContext ();
+            var scootersFromDb = mDbContext.scooters.ToList ();
 
             Scooters = new ObservableCollection<ScooterViewModel> (
-                scootersFromDb.Select (s => new ScooterViewModel (s))
+                scootersFromDb.Select (s => new ScooterViewModel (s, mDbContext))
             );
             ChangePositionCommand = new RelayCommand (MoveScooter);
         }
@@ -59,6 +60,7 @@ namespace ScooterKonsortiumWPF.ViewModel {
 
             SelectedScooter.PosX += 1;
             SelectedScooter.PosY += 1;
+            //SelectedScooter.CurrentBattery
         }
     }
 }

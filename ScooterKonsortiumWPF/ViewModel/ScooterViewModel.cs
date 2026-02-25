@@ -9,13 +9,24 @@ namespace ScooterKonsortiumWPF.ViewModel
         private readonly Scooter _model;
         private readonly ScooterDbContext _context;
 
-        public ScooterViewModel (Scooter model)
+        public ScooterViewModel (Scooter model, ScooterDbContext dbContext)
         {
-            _model = model;
-            _context = new ScooterDbContext ();
+            _model   = model;
+            _context = dbContext;
         }
 
         public int Id => _model.Id;
+
+        public int CurrentBattery { 
+            get => _model.Battery;
+            set {
+                if (_model.Battery != value) {
+                    _model.Battery = value;
+                    OnPropertyChanged    ();
+                    _context.SaveChanges (); //Änderung in der DB speichern
+                }
+            }
+        }
 
         public int PosX {
             get => _model.PosX;
