@@ -9,51 +9,82 @@
     <Grid>
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
         <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <ComboBox ItemsSource="{Binding Scooters}"
                   SelectedItem="{Binding SelectedScooter}"
                   Grid.Row="0"
-                  Height="20"
-                  Width="120"
-                  Margin="10">
-        <ComboBox.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Scooter: "/>
-                    <TextBlock Text="{Binding Id}"/>
-                    <TextBlock Text=" | Pos: "/>
-                    <TextBlock Text="{Binding PosX}"/>
-                    <TextBlock Text=", "/>
-                    <TextBlock Text="{Binding PosY}"/>
-                </StackPanel>
-            </DataTemplate>
-        </ComboBox.ItemTemplate>
+                  Height="25"
+                  Width="140"
+                  Margin="0,10,0,0"
+                  Grid.RowSpan="2">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Scooter: "/>
+                        <TextBlock Text="{Binding Id}"/>
+                        <TextBlock Text=" | Pos: "/>
+                        <TextBlock Text="{Binding PosX}"/>
+                        <TextBlock Text=", "/>
+                        <TextBlock Text="{Binding PosY}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
+        <Label   Content="Pos X:"
+                 Grid.Column="1"
+                 Margin="20,0,0,0"/>
+        <Label   Content="Pos Y:"
+                 Grid.Column="1"
+                 Grid.Row="1"
+                 Margin="20,0,0,0"/>
         <TextBox Text="{Binding ChangePosX}"
                  Height="20"
-                 Width="60"
-                 Grid.Column="1"/>
+                 Width="45"
+                 Grid.Column="1"
+                 Grid.Row="1"/>
         <TextBox Text="{Binding ChangePosY}"
                  Height="20"
-                 Width="60"
-                 Grid.Column="2"/>
-        <Button Content="Position ändern"
-                Command="{Binding ChangePositionCommand}"
-                Height="20"
-                Width="120"
-                Grid.Column="3"/>
-        <Canvas Background="Green"
-            Width="650"
-            Height="400"
-            Grid.Row="1"
-            Grid.ColumnSpan="4">
+                 Width="45"
+                 Grid.Column="1"/>
+        <Button  Content="Position ändern"
+                 Command="{Binding ChangePositionCommand}"
+                 Height="20"
+                 Width="120"
+                 Margin="0,10,0,0"
+                 Grid.Column="4"
+                 Grid.Row="0"/>
+        <Button  Content="An Ladestation"
+                 Command="{Binding BringScooterToStationCommand}"
+                 Height="20"
+                 Width="120"
+                 Margin="0,5,0,0"
+                 Grid.Column="4"
+                 Grid.Row="1"/>
+        <Label   Content="{Binding SelectedScooter.CurrentBattery}"
+                 FontFamily="Arial Black"
+                 FontSize="25"
+                 Grid.Column="3"
+                 Grid.Row="0"
+                 Grid.RowSpan="2"
+                 HorizontalContentAlignment="Center"
+                 VerticalContentAlignment  ="Center"
+                 Margin="0,10,0,0"/>
+        <Canvas  Background="Green"
+                 Width="660"
+                 Height="400"
+                 Grid.Row="2"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="5"
+                 HorizontalAlignment="Center">
 
         <!-- Ladepunkte -->
         <ItemsControl ItemsSource="{Binding ChargingStations}">

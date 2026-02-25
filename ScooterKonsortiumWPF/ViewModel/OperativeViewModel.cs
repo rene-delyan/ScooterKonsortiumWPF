@@ -12,9 +12,8 @@ namespace ScooterKonsortiumWPF.ViewModel {
         private          ScooterDbContext    mDbContext;
         private          ScooterViewModel    mSelectedScooter;
 
-        public ICommand ChangePositionCommand {
-            get;
-        }
+        public ICommand ChangePositionCommand        { get; }
+        public ICommand BringScooterToStationCommand { get; }
 
         //Public properties
         public double mScale => 20;
@@ -49,7 +48,8 @@ namespace ScooterKonsortiumWPF.ViewModel {
             Scooters = new ObservableCollection<ScooterViewModel> (
                 scootersFromDb.Select (s => new ScooterViewModel (s, mDbContext))
             );
-            ChangePositionCommand = new RelayCommand (MoveScooter);
+            ChangePositionCommand        = new RelayCommand (MoveScooter);
+            BringScooterToStationCommand = new RelayCommand (BringScooterToStation);
         }
 
         //Functions
@@ -61,6 +61,17 @@ namespace ScooterKonsortiumWPF.ViewModel {
             SelectedScooter.PosX += 1;
             SelectedScooter.PosY += 1;
             //SelectedScooter.CurrentBattery
+        }
+
+        private void BringScooterToStation ()
+        {
+            if (SelectedScooter == null)
+                return;
+            var station = mDbContext.chargingStations.FirstOrDefault ();
+            if (station != null) {
+                SelectedScooter.PosX = station.PosX;
+                SelectedScooter.PosY = station.PosY;
+            }
         }
     }
 }
