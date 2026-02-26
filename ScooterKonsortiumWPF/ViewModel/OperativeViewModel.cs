@@ -1,5 +1,6 @@
 ﻿using ScooterKonsortium;
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
@@ -32,9 +33,22 @@ namespace ScooterKonsortiumWPF.ViewModel {
         public ScooterViewModel SelectedScooter {
             get => mSelectedScooter;
             set {
+                // Unsubscribe from previous selection's PropertyChanged
+                if (mSelectedScooter != null)
+                {
+                    mSelectedScooter.PropertyChanged -= SelectedScooterOnPropertyChanged;
+                }   
+
                 mSelectedScooter = value;
-                OnPropertyChanged ();
-                OnPropertyChanged (nameof (GetCorrectColor));
+
+                // Subscribe to new selection's PropertyChanged so we can update dependent properties
+                if (mSelectedScooter != null)
+                {
+                    mSelectedScooter.PropertyChanged += SelectedScooterOnPropertyChanged;
+                }
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(GetCorrectColor));
             }
         }
 
@@ -81,7 +95,7 @@ namespace ScooterKonsortiumWPF.ViewModel {
         //Functions
         private void MoveScooter ()
         {
-            //Max X = 19 Max Y = 32
+            //Max X = 32 Max Y = 19
             if (SelectedScooter == null)
                 return;
 
@@ -91,7 +105,7 @@ namespace ScooterKonsortiumWPF.ViewModel {
 
             distance = CalcDistance(SelectedScooter.PosX, SelectedScooter.PosY,ChangePosX,ChangePosY);
             chargeCost = distance * 2;
-            if (ChangePosX > 19 || ChangePosX < 0 || ChangePosY > 32 || ChangePosY < 0)
+            if (ChangePosX > 32 || ChangePosX < 0 || ChangePosY > 19 || ChangePosY < 0)
             {
                 MessageBox.Show("Gültige Koordinaten eingeben! X (0-19) | Y (0 - 32)");
             }
@@ -117,7 +131,7 @@ namespace ScooterKonsortiumWPF.ViewModel {
                 MessageBox.Show("Scooter " + SelectedScooter.Id + " hat nicht genug Reichweite für diese Fahrt! Bitte eine geringere Distanz auswählen oder zur nächsten Ladestation bringen.\n+" +
                                 "Aktuelle Reichweite: " + SelectedScooter.CurrentBattery + "\nBenötigte Reichweite: " + chargeCost);
             }
-            //SelectedScooter.CurrentBattery
+            
         }
 
         private void BringScooterToStation ()
@@ -158,6 +172,19 @@ namespace ScooterKonsortiumWPF.ViewModel {
             }
 
             return nearestStation;
+        }
+
+        private void SelectedScooterOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            // If battery or position changes, notify that GetCorrectColor changed
+            if (e == null) return;
+
+            if (e.PropertyName == nameof(ScooterViewModel.CurrentBattery)
+                || e.PropertyName == nameof(ScooterViewModel.PosX)
+                || e.PropertyName == nameof(ScooterViewModel.PosY))
+            {
+                OnPropertyChanged(nameof(GetCorrectColor));
+            }
         }
 
        

@@ -49,12 +49,12 @@
         <TextBox Text="{Binding ChangePosX}"
                  Height="20"
                  Width="45"
-                 Grid.Column="1"
-                 Grid.Row="1"/>
+                 Grid.Column="1"/>
         <TextBox Text="{Binding ChangePosY}"
                  Height="20"
                  Width="45"
-                 Grid.Column="1"/>
+                 Grid.Column="1"
+                 Grid.Row="1"/>
         <Label   Content="Akku: "
                  FontFamily="Arial Black"
                  FontSize="25"
